@@ -3,7 +3,7 @@ Grab public social media contents from web
 
 ## A SpringBoot project deployed with 
 
-  -pringMVC 
+  -SpringMVC 
   
   -Maven
   
