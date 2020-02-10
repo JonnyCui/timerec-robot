@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.timerec.robot.Mapper.RobotMapper">
+
+    <insert id="createCapsule" parameterType="entity" >
+        USE timerec;
+        INSERT INTO t_capsule
+        SET USER_GUID='1000000',CONTENT_STR=entity.content_str,CREATE_TIME=entity.create_time,RES_TYPE='1'
+    </insert>
+</mapper>
