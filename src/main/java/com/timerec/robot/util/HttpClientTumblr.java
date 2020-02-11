@@ -1,4 +1,4 @@
-package com.timerec.robot.demo;
+package com.timerec.robot.util;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
@@ -45,9 +45,6 @@ public class HttpClientTumblr {
                 for (Element article : document.getElementsByTag("article")) {
                     System.out.println(StringUtils.repeat("=", 50) + " separator " + StringUtils.repeat("=", 50));
                     String imgUrl = article.getElementsByTag("img").attr("src");
-                    if (imgUrl.equals("")){
-                        imgUrl = urlStr+ article.getElementsByTag("iframe").attr("src");
-                    }
                     // 处理话题标签#
                     StringBuilder tags = new StringBuilder();
                     if (article.getElementsByClass("tag-link").text().equals("")){

@@ -5,6 +5,7 @@
     <insert id="createCapsule" parameterType="entity" >
         USE timerec;
         INSERT INTO t_capsule
-        SET USER_GUID='1000000',CONTENT_STR=entity.content_str,CREATE_TIME=entity.create_time,RES_TYPE='1'
+        SET USER_GUID=entity.userGuid,CONTENT_STR=entity.contentStr,CREATE_TIME=entity.createTime,RES_TYPE='1'
     </insert>
+
 </mapper>

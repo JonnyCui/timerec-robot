@@ -1,7 +1,8 @@
-package com.timerec.robot.demo;
+package com.timerec.robot.util;
 
 
 import com.timerec.robot.entity.Capsule;
+import com.timerec.robot.entity.ContentResource;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -18,6 +19,7 @@ import java.io.IOException;
 
 public class HttpClientEllo {
     private static Capsule capsule = new Capsule();
+    private static ContentResource contentResource = new ContentResource();
 
     public static Capsule main(String address) {
 
@@ -29,6 +31,7 @@ public class HttpClientEllo {
         //设置请求头，将爬虫伪装成浏览器
         request.setHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36");
         String caption = "";
+        String imgUrl = "";
         try{
             //执行get请求，相当于在输入地址栏后敲回车键
             response = httpClient.execute(request);
@@ -45,7 +48,7 @@ public class HttpClientEllo {
 
                 for (Element article : document.getElementsByTag("article")){
 //                    System.out.println(StringUtils.repeat("=",50) + " separator " + StringUtils.repeat("=",50));
-                    String imgUrl = article.getElementsByTag("img").attr("src");
+                    imgUrl = article.getElementsByTag("img").attr("src");
                     // 转到原po地址并解析
                     String postUrl = article.getElementsByTag("a").eq(1).attr("href");
                     Document content = Jsoup.connect(postUrl).get();
@@ -65,8 +68,11 @@ public class HttpClientEllo {
                     }
                     // 控制台打印结果
 //                    System.out.println(imgUrl+"\n"+caption);
-                    capsule.setContentStr(caption);
                 }
+                capsule.setContentStr(caption);
+                contentResource.setImageUrl(imgUrl);
+                System.out.println("Capsule Details:  \n"+ capsule);
+                System.out.println("Resource: "+ contentResource);
             } else{
                 //如果返回状态不是200，比如404（页面不存在）等，根据情况做处理
                 System.out.println("返回状态不是200");

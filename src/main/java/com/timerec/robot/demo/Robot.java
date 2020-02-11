@@ -1,9 +1,9 @@
-package com.timerec.robot.models;
+package com.timerec.robot.demo;
 
 import com.timerec.robot.Service.IRobotService;
 import com.timerec.robot.Service.impl.RobotServiceImpl;
-import com.timerec.robot.demo.HttpClientEllo;
 import com.timerec.robot.entity.Capsule;
+import com.timerec.robot.util.HttpClientEllo;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;

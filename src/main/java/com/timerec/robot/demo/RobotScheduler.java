@@ -1,4 +1,4 @@
-package com.timerec.robot.models;
+package com.timerec.robot.demo;
 
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
@@ -30,8 +30,8 @@ public class RobotScheduler {
         System.out.println("--------scheduler start ! ------------");
         scheduler.start();
 
-        //睡眠  20s后结束
-        TimeUnit.SECONDS.sleep(20);
+        //睡眠  15s后结束
+        TimeUnit.SECONDS.sleep(15);
         scheduler.shutdown();
         System.out.println("--------scheduler shutdown ! ------------");
 

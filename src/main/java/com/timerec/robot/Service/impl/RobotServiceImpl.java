@@ -18,14 +18,13 @@ public class RobotServiceImpl extends ServiceImpl<RobotMapper, Capsule> implemen
     @Override
     public void addCapsule(Capsule capsule) {
         capsule.setDeleted(0);
-        capsule.setCapsuleGuid("1");
         capsule.setCreateTime(DateUtil.now());
         capsule.setQueryTime(capsule.getCreateTime());
         this.save(capsule);
     }
 
     @Override
-    public boolean save(Capsule entity) {
+    public boolean save(Capsule capsule) {
         return false;
     }
 
