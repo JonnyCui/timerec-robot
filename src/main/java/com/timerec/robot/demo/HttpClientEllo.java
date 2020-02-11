@@ -1,6 +1,6 @@
 package com.timerec.robot.demo;
 
-import com.timerec.robot.Controller.RobotController;
+
 import com.timerec.robot.entity.Capsule;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
@@ -17,9 +17,9 @@ import org.jsoup.nodes.Element;
 import java.io.IOException;
 
 public class HttpClientEllo {
+    private static Capsule capsule = new Capsule();
 
-    public static void main(String address) {
-        String cont_str = "";
+    public static Capsule main(String address) {
 
         //生成httpclient，打开一浏览器
         CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -28,6 +28,7 @@ public class HttpClientEllo {
         HttpGet request = new HttpGet(address);
         //设置请求头，将爬虫伪装成浏览器
         request.setHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36");
+        String caption = "";
         try{
             //执行get请求，相当于在输入地址栏后敲回车键
             response = httpClient.execute(request);
@@ -55,7 +56,7 @@ public class HttpClientEllo {
                     if (p.length() > 500){
                         index = 499;
                     }
-                    String caption = p.substring(0,index).replace("Onwards! +", "")
+                    caption = p.substring(0,index).replace("Onwards! +", "")
                             .replace("#Ello", "")
                             .replace("#ello", "");
 
@@ -64,7 +65,7 @@ public class HttpClientEllo {
                     }
                     // 控制台打印结果
 //                    System.out.println(imgUrl+"\n"+caption);
-                    cont_str = caption;
+                    capsule.setContentStr(caption);
                 }
             } else{
                 //如果返回状态不是200，比如404（页面不存在）等，根据情况做处理
@@ -74,13 +75,11 @@ public class HttpClientEllo {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            Capsule capsule = new Capsule();
-            capsule.setContentStr(cont_str);
-            new RobotController().createCapsule(capsule);
             //关闭 httpclient
             HttpClientUtils.closeQuietly(response);
             HttpClientUtils.closeQuietly(httpClient);
         }
+        return capsule;
     }
 
 }

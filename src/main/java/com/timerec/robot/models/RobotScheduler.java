@@ -21,17 +21,17 @@ public class RobotScheduler {
 
         //     测试用
              .startNow()//立即生效
-             .withSchedule(SimpleScheduleBuilder.simpleSchedule()
-             .withIntervalInSeconds(5)//每隔5s执行一次
-             .repeatForever()).build();//一直执行
+             .withSchedule(SimpleScheduleBuilder.simpleSchedule()).build();
+//             .withIntervalInSeconds(10)//每隔10s执行一次
+//             .repeatForever()).build();
 
         //4、执行
         scheduler.scheduleJob(jobDetail, trigger);
         System.out.println("--------scheduler start ! ------------");
         scheduler.start();
 
-        //睡眠  10s后结束
-        TimeUnit.SECONDS.sleep(10);
+        //睡眠  20s后结束
+        TimeUnit.SECONDS.sleep(20);
         scheduler.shutdown();
         System.out.println("--------scheduler shutdown ! ------------");
 
