@@ -14,9 +14,11 @@ import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+@Component
 public class HttpClientEllo {
     private static Capsule capsule = new Capsule();
     private static ContentResource contentResource = new ContentResource();
@@ -71,8 +73,7 @@ public class HttpClientEllo {
                 }
                 capsule.setContentStr(caption);
                 contentResource.setImageUrl(imgUrl);
-                System.out.println("Capsule Details:  \n"+ capsule);
-                System.out.println("Resource: "+ contentResource);
+                System.out.println("Capsule Resource: \n"+ contentResource.getImageUrl());
             } else{
                 //如果返回状态不是200，比如404（页面不存在）等，根据情况做处理
                 System.out.println("返回状态不是200");

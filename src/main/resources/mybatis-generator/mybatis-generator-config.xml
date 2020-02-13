@@ -66,18 +66,18 @@
             <!-- 是否让 schema 作为包的后缀，默认为false -->
             <property name="enableSubPackages" value="false"/>
             <!-- 是否针对string类型的字段在set方法中进行修剪，默认false -->
-            <property name="trimStrings" value="true"/>
+            <property name="trimStrings" value="false"/>
         </javaModelGenerator>
 
 
         <!-- 生成Mapper.xml文件 -->
         <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
-            <property name="enableSubPackages" value="false"/>
+            <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
         <!-- 生成 XxxMapper.java 接口-->
-        <javaClientGenerator targetPackage="com.timerec.robot.Mapper" targetProject="src/main/java" type="XMLMAPPER">
-            <property name="enableSubPackages" value="false"/>
+        <javaClientGenerator targetPackage="com.timerec.robot.mapper" targetProject="src/main/java" type="XMLMAPPER">
+            <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
 

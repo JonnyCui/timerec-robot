@@ -1,4 +1,4 @@
-package com.timerec.robot.Service;
+package com.timerec.robot.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.timerec.robot.entity.Capsule;
 
@@ -10,4 +10,9 @@ public interface IRobotService extends IService<Capsule> {
      * @param entity
      */
     void addCapsule(Capsule entity);
+
+    /**
+     * @return 目前所有胶囊的数量
+     */
+    int capsTotal();
 }
