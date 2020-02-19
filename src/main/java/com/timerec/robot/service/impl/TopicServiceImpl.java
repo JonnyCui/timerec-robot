@@ -17,7 +17,9 @@ public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implements
 
     @Override
     public void addTopic(Topic topic){
+        System.out.println("New topic found! \n" + topic);
         this.save(topic);
+        System.out.println("New Topic Uploaded");
     }
 
     public boolean isTopicExist(String topicName){

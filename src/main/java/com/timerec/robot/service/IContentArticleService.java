@@ -10,4 +10,7 @@ public interface IContentArticleService extends IService<ContentArticle> {
      */
     void addArticle(ContentArticle article);
 
+    ContentArticle selectArticle(int randId);
+
+    int getCount();
 }

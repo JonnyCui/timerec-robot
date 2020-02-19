@@ -18,9 +18,9 @@ import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Random;
 import java.util.UUID;
@@ -28,22 +28,29 @@ import java.util.UUID;
 @Component
 public class HttpClientEllo {
 
-//    private static LinkedList<ArrayList<String>> resources = new LinkedList<>();
+// 被 Autowired注解 报空指针，注入失败搞的绝望过吗？
+//private final ITopicService topicService;
 //
-//    private static LinkedList<String> posts = new LinkedList<>();
+//private final ICapsuleTopicService capsuleTopicService;
 //
-//    private static String postUrl;
+//private final IContentArticleService contentArticleService;
+//
+//    public HttpClientEllo(ITopicService topicService, ICapsuleTopicService capsuleTopicService, IContentArticleService contentArticleService) {
+//        this.topicService = topicService;
+//        this.capsuleTopicService = capsuleTopicService;
+//        this.contentArticleService = contentArticleService;
+//    }
 
-    @Autowired
+    @Resource
     private ITopicService topicService;
 
-    @Autowired
+    @Resource
     private ICapsuleTopicService capsuleTopicService;
 
-    @Autowired
+    @Resource
     private IContentArticleService contentArticleService;
 
-    public void main(String address) {
+    public void httpclient(String address) {
 
         //生成httpclient，打开一浏览器
         CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -69,14 +76,17 @@ public class HttpClientEllo {
 //                System.out.println(document.getElementsByTag("article"));
 
                 for (Element article : document.getElementsByTag("article")) {
-//                    System.out.println(StringUtils.repeat("=", 50) + " separator " + StringUtils.repeat("=", 50));
+                    // 分隔符
+                    System.out.println(StringUtils.repeat("-", 50) + " separator " + StringUtils.repeat("-", 50));
                     ContentArticle contentArticle = new ContentArticle();
 
+                    // 随机选取机器人用户（1/120）
+                    int guid = 1000000 + new Random().nextInt(120); // 0-119
                     // 特定用户
                     if (address.equals("https://ello.co/conami")){
-                        contentArticle.setAssignGuid("1000065"); } // Joyce Cha
+                        contentArticle.setAssignedUserGuid("1000065"); } // Joyce Cha
                     else if (address.equals("https://ello.co/fokality")){
-                        contentArticle.setAssignGuid("1000088");} // Rico Carver
+                        contentArticle.setAssignedUserGuid("1000088");} // Rico Carver
 
                     // 打印查看文章
 //                    System.out.println(article);
@@ -84,6 +94,9 @@ public class HttpClientEllo {
 
                     // 转到原po地址并解析
                     String postUrl = article.getElementsByTag("a").eq(1).attr("href");
+                    if (postUrl.equals("https://ello.co/minusbaby/post/rsndlmv5bgc3rc57iwyeqw")){
+                        postUrl ="https://ello.co/kseniaanske/post/im0vxa4b5penad-ziyq12w";
+                    }
                     Document content = Jsoup.connect(postUrl).get();
 
                     // elloposts_ + 原po地址后22位(为所有Ello post的唯一码)生成 32位唯一 capsuleGuid，防止生成重复胶囊
@@ -113,42 +126,49 @@ public class HttpClientEllo {
 
                     // 处理#话题标签
                     if (caption.contains("#")){
-                        String[] topics = caption.split("#");
+                        String tags = caption.substring(caption.indexOf("#"));
+                        String[] topics = tags.split("#");
                         for (String t : topics){
                             Topic topic = new Topic();
                             if (StringUtils.isBlank(t))
                                 continue;
-                            if (topicService.isTopicExist(t)){
+                            if (!topicService.isTopicExist(t)){
                                 topic.setTopicGuid(UUID.randomUUID().toString().replaceAll("-",""));
                                 topic.setTopicName(t);
+                                topic.setCapsuleNum(1);
                                 topicService.addTopic(topic);
+                            }else{
+                                topic.setCapsuleNum(+1);
                             }
                             CapsuleTopic capTopic = new CapsuleTopic();
-                            capTopic.setCapGuid(contentArticle.getArticleGuid());
+                            capTopic.setCapsuleGuid(contentArticle.getArticleGuid());
                             capTopic.setTopicGuid(topicService.selectTopicGuid(t));
                             capsuleTopicService.addCapTopic(capTopic);
+                            System.out.println("Topic: "+ t + " related with capsule");
                         }
                     }
 
                     // Content Article 实体 内容赋值
-                    contentArticle.setContStr(caption);
+                    contentArticle.setContentStr(caption);
 
                     // 获取图片地址
                     String imgUrls = null;
                     for (Element el : article.getElementsByTag("img")) {
                         String img = el.attr("src");
                         if (img.contains("jpg") || img.contains("png")) {
-                            img.substring(img.indexOf("//")+2);
-                            contentArticle.setResType(1);
-                            imgUrls += img + " ";
-                        } else {
-                            imgUrls = "";
+                            img.substring(img.indexOf("//") + 2);
+                            contentArticle.setResourceType(1);
+                            if (imgUrls == null) {
+                                imgUrls = img;
+                            } else {
+                                imgUrls += " " + img;
+                            }
                         }
                     }
                     contentArticle.setResourceUrl(imgUrls);
 
 //                    // 插入数据
-//                    contentArticleService.addArticle(contentArticle);
+                    contentArticleService.addArticle(contentArticle);
                 }
             } else {
                 //如果返回状态不是200，比如404（页面不存在）等，根据情况做处理

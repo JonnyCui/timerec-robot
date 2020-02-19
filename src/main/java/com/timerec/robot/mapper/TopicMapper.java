@@ -11,4 +11,5 @@ public interface TopicMapper extends BaseMapper<Topic> {
     int checkTopic(@Param("topic") String topic);
 
     String selectTopicGuid(@Param("topicName") String topicName);
+
 }

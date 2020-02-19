@@ -8,4 +8,8 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface ContentArticleMapper extends BaseMapper<ContentArticle> {
     int checkArticle(@Param("entity") ContentArticle entity);
+
+    ContentArticle selectArticle(@Param("randId") int randId);
+
+    int getCount();
 }

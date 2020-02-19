@@ -10,13 +10,13 @@ import java.io.Serializable;
 @TableName("t_capsule_topic")
 public class CapsuleTopic implements Serializable {
 
-    @TableField("CASPSULE_TOPIC_ID")
-    private int capTopicId;
+    @TableField("CAPSULE_TOPIC_ID")
+    private int capsuleTopicId;
 
     @TableField("TOPIC_GUID")
     private String topicGuid;
 
     @TableField("CAPSULE_GUID")
-    private String capGuid;
+    private String capsuleGuid;
 
 }

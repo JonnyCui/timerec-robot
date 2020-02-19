@@ -120,13 +120,6 @@
             <version>3.2.0</version>
         </dependency>
 
-        <!--mybatis实体类生成器-->
-        <dependency>
-            <groupId>org.mybatis.generator</groupId>
-            <artifactId>mybatis-generator-core</artifactId>
-            <version>1.3.5</version>
-        </dependency>
-
         <!--Spring的支持-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -160,61 +153,7 @@
             <artifactId>javax.annotation-api</artifactId>
             <version>1.3.2</version>
         </dependency>
-
     </dependencies>
-
-    <build>
-        <plugins>
-            <!--mybatis generator maven插件-->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.mybatis.generator</groupId>
-                <artifactId>mybatis-generator-maven-plugin</artifactId>
-                <version>1.3.5</version>
-                <configuration>
-                    <!--mybatis的代码生成器的配置文件-->
-                    <configurationFile>src/main/resources/mybatis-generator/mybatis-generator-config.xml
-                    </configurationFile>
-                    <!--允许覆盖生成的文件-->
-                    <overwrite>true</overwrite>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>Generate MyBatis Artifacts</id>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-                    </execution>
-                </executions>
-                <!--此处必须添加mysql驱动包-->
-                <dependencies>
-                    <dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <scope>runtime</scope>
-                        <version>5.1.46</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.mybatis.generator</groupId>
-                        <artifactId>mybatis-generator-core</artifactId>
-                        <version>1.3.5</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>11</source>
-                    <target>11</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 
     <repositories>
         <repository>

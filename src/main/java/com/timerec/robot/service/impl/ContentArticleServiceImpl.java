@@ -26,10 +26,20 @@ public class ContentArticleServiceImpl extends ServiceImpl<ContentArticleMapper,
         if (contentArticleMapper.checkArticle(article) == 0){
             article.setPending(1);
             this.save(article);
-            System.out.println("Article "+ article.getContArticleId() + " Uploaded!");
+            System.out.println("Article Uploaded!");
         }else{
             System.out.println("Article Already Exist!");
         }
+    }
+
+    @Override
+    public ContentArticle selectArticle(int randId) {
+        return contentArticleMapper.selectArticle(randId);
+    }
+
+    @Override
+    public int getCount() {
+        return contentArticleMapper.getCount();
     }
 
 }

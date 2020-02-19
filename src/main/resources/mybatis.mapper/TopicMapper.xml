@@ -13,4 +13,5 @@
         FROM timerec.t_topic t
         WHERE t.topic_name = #{topicName}
     </select>
+
 </mapper>
