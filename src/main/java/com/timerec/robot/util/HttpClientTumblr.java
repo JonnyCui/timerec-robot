@@ -1,5 +1,6 @@
 package com.timerec.robot.util;
 
+import com.timerec.robot.entity.Capsule;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
@@ -14,10 +15,29 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+// "https://the-memedaddy.tumblr.com/", // 搞笑
+// "https://memesinpyjamas.tumblr.com/", // 搞笑
+// "https://kittens-jpg.tumblr.com/", // 猫
+// "https://endless-puppies.tumblr.com/", // 狗
+// "https://tiktokarchive.tumblr.com/tagged/fave", //tiktok视频
 
 public class HttpClientTumblr {
+    private static Capsule capsule = new Capsule();
+
+    private static LinkedList<String> capStrs = new LinkedList<>();
+
+    private static LinkedList<ArrayList<String>> resources = new LinkedList<>();
+
+    private static LinkedList<String> posts = new LinkedList<>();
+
+    private static String postUrl;
+
+
     public static void main(String[] args) {
-        doGet("https://happifying.com/");
+        doGet("https://tiktokarchive.tumblr.com/tagged/fave");
     }
 
     public static void doGet(String urlStr) {
@@ -40,38 +60,51 @@ public class HttpClientTumblr {
                 //Jsoup解析html
                 Document document = Jsoup.parse(html);
                 //通过标签获取article
-                System.out.println(document.getElementsByTag("article"));
-
                 for (Element article : document.getElementsByTag("article")) {
                     System.out.println(StringUtils.repeat("=", 50) + " separator " + StringUtils.repeat("=", 50));
+                    System.out.println(article);
+
                     String imgUrl = article.getElementsByTag("img").attr("src");
                     // 处理话题标签#
-                    StringBuilder tags = new StringBuilder();
-                    if (article.getElementsByClass("tag-link").text().equals("")){
-                        for (String tg : article.getElementsByClass("tags").eachText()){
-                            if (tg.equals("happifying")){
-                                tg = "";
-                            }else{
-                                tags.append("#").append(tg).append(" ");
-                            }
-                        }
-                    }else {
-                        for (String t : article.getElementsByClass("tag-link").eachText()){
-                            if (t.equals("MemesInPyjamas")){
-                                t = "";
-                            }else{
-                                tags.append("#").append(t).append(" ");
-                            }
+                    String tags = "";
+                    tags = article.getElementsByClass("post_tag").text();
+                    if (tags.isEmpty()){
+                        tags = article.getElementsByClass("tag-link").text();
+                        if (tags.isEmpty()){
+                            tags = article.getElementsByClass("tags").text();
                         }
                     }
-                    String caption = article.getElementsByClass("caption").text();
-                    if (tags.equals("")){
-                        caption += " #timerec";
+
+                    String caption = article.getElementsByClass("caption").text()
+                            .replace("irl","me").replace(" irl","me")
+                            .replace("(Source)","");
+
+                    if (!tags.equals("")) {
+                        caption = "#"+ tags.replaceAll(" ", " #");
+                        // 截取前6个#
+                        int tSpace = StringUtils.ordinalIndexOf(caption, "#", 7);
+                        if (tSpace != -1){
+                            caption = caption.substring(0, tSpace);
+                        }
+                    }
+
+                    String videoUrl = article.getElementsByTag("source").attr("src");
+                    if (!caption.isEmpty()){
+                        capsule.setCapsuleGuid(article.getElementsByTag("article").attr("id"));
+                        capsule.setContentStr(caption);
+                        if (!videoUrl.isEmpty()){
+                            capsule.setResType(2);
+                            System.out.println(videoUrl+"\n"+caption);
+                        }else if (!imgUrl.isEmpty()){
+                            capsule.setResType(1);
+                            System.out.println(imgUrl+"\n"+caption);
+                        }else{
+                            System.out.println("***Nothing***");
+                        }
                     }else{
-                        caption += " " + tags;
+                        System.out.println("***Skip***");
                     }
-                    // 控制台打印结果
-                    System.out.println(imgUrl+"\n"+caption);
+
                 }
             }
         } catch (ClientProtocolException e) {

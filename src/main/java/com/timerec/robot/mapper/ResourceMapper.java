@@ -1,15 +1,12 @@
 package com.timerec.robot.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.timerec.robot.entity.Capsule;
+import com.timerec.robot.entity.Resource;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 @Mapper
-public interface RobotMapper extends BaseMapper<Capsule>{
+public interface ResourceMapper extends BaseMapper<Resource> {
 
-    int getCapsTotal();
-
-    int checkCaps(@Param("capsule")  Capsule capsule);
-
+    int checkRes(@Param("resource") Resource resource);
 }

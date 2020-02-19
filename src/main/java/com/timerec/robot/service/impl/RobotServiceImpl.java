@@ -1,5 +1,6 @@
 package com.timerec.robot.service.impl;
 
+
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.timerec.robot.entity.Capsule;
 import com.timerec.robot.mapper.RobotMapper;
@@ -9,7 +10,6 @@ import org.assertj.core.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
 
 @Service
 @Slf4j
@@ -21,17 +21,19 @@ public class RobotServiceImpl extends ServiceImpl<RobotMapper, Capsule> implemen
     @Override
     public void addCapsule(Capsule capsule) {
 
-
         capsule.setDeleted(0);
-        String capGuid = UUID.randomUUID().toString().replaceAll("-","");
-        capsule.setCapsuleGuid(capGuid);
         capsule.setCreateTime(DateUtil.now());
         capsule.setQueryTime(capsule.getCreateTime());
-
-        // 打印新建胶囊结果
+        capsule.setWhoSee(4);
         System.out.println(capsule);
 
-        this.save(capsule);
+        // 判断新建胶囊是否已存在数据库中
+        if (robotMapper.checkCaps(capsule) == 0){
+            this.save(capsule);
+            System.out.println("------ Capsule Uploaded ------");
+        }else{
+            System.out.println("~~~ Capsule already exist！~~~");
+        }
     }
 
     @Override

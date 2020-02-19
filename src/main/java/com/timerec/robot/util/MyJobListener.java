@@ -26,7 +26,6 @@ public class MyJobListener implements JobListener {
     @Override
     public void jobExecutionVetoed(JobExecutionContext context) {
         System.out.println("Job调度被拒:jobExecutionVetoed");
-        //todo:原因捕获
 
     }
 

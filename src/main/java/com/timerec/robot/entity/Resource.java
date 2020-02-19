@@ -72,14 +72,4 @@ public class Resource implements Serializable {
     @TableField("CREATE_TIME")
     private Date createTime;
 
-    public String getUrl(){
-
-        if(this.domain.indexOf("http") == -1){
-
-            this.domain = "http://" + this.domain;
-        }
-
-        return this.domain + "/" + this.pathName;
-    }
-
 }

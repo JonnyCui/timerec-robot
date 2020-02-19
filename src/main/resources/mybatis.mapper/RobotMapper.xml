@@ -7,4 +7,11 @@
         FROM timerec.t_capsule c
         WHERE c.deleted = 0;
     </select>
+
+    <select id="checkCaps" parameterType="capsule" resultType="int">
+        SELECT count(1)
+        FROM timerec.t_capsule c
+        WHERE c.capsule_guid = #{capsule.capsuleGuid}
+    </select>
+
 </mapper>
