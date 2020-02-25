@@ -1,5 +1,5 @@
 # timerec-robot
-Grab public social media contents from web
+Grab public social media contents from web and upload data to App's database
 
 ## A SpringBoot project deployed with 
 
@@ -7,8 +7,10 @@ Grab public social media contents from web
   
   -Maven
   
-  -MyBatis
+  -MyBatisPlus
   
   -Jsoup
   
   -Quartz
+  
+  -Mysql
