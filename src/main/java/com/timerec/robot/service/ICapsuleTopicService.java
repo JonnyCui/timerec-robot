@@ -9,4 +9,8 @@ public interface ICapsuleTopicService extends IService<CapsuleTopic> {
      * @param capTopic
      */
     void addCapTopic(CapsuleTopic capTopic);
+
+    boolean isExist(CapsuleTopic capTopic);
+
+    int countTopic(String topicGuid);
 }

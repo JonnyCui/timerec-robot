@@ -22,4 +22,6 @@ public interface ITopicService extends IService<Topic> {
      * @param topicName
      */
     String selectTopicGuid(String topicName);
+
+    int getCount();
 }

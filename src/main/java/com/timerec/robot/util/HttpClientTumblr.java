@@ -24,6 +24,7 @@ import java.util.LinkedList;
 // "https://endless-puppies.tumblr.com/", // 狗
 // "https://tiktokarchive.tumblr.com/tagged/fave", //tiktok视频
 
+
 public class HttpClientTumblr {
     private static Capsule capsule = new Capsule();
 
@@ -37,7 +38,7 @@ public class HttpClientTumblr {
 
 
     public static void main(String[] args) {
-        doGet("https://tiktokarchive.tumblr.com/tagged/fave");
+        doGet("https://cute.maxtree.me/post/190823681203");
     }
 
     public static void doGet(String urlStr) {

@@ -13,11 +13,12 @@
         <property name="jobClass" value="com.timerec.robot.demo.Robot"/>
     </bean>
 
-    <bean name="quartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" >
+    <bean name="quartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" destroy-method="destroy" lazy-init="false">
         <property name="dataSource" ref ="dataSource" />
     </bean>
 
     <bean id="jobFactory" class="com.timerec.robot.configure.TaskSchedulerFactory"/>
+
     <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="jobFactory" ref="jobFactory"/>
     </bean>

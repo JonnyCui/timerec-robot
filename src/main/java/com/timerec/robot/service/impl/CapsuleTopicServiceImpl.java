@@ -21,4 +21,15 @@ public class CapsuleTopicServiceImpl extends ServiceImpl<CapsuleTopicMapper, Cap
         this.save(capTopic);
     }
 
+    @Override
+    public boolean isExist(CapsuleTopic capTopic) {
+        return capsuleTopicMapper.isExist(capTopic) != 0 ;
+    }
+
+    @Override
+    public int countTopic(String topicGuid) {
+        return capsuleTopicMapper.countTopic(topicGuid);
+    }
+
+
 }

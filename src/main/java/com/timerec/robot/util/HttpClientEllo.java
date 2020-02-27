@@ -1,8 +1,6 @@
 package com.timerec.robot.util;
 
-import com.timerec.robot.entity.CapsuleTopic;
 import com.timerec.robot.entity.ContentArticle;
-import com.timerec.robot.entity.Topic;
 import com.timerec.robot.service.ICapsuleTopicService;
 import com.timerec.robot.service.IContentArticleService;
 import com.timerec.robot.service.ITopicService;
@@ -23,7 +21,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Random;
-import java.util.UUID;
 
 @Component
 public class HttpClientEllo {
@@ -80,14 +77,15 @@ public class HttpClientEllo {
                     System.out.println(StringUtils.repeat("-", 50) + " separator " + StringUtils.repeat("-", 50));
                     ContentArticle contentArticle = new ContentArticle();
 
-                    // 随机选取机器人用户（1/120）
-                    int guid = 1000000 + new Random().nextInt(120); // 0-119
                     // 特定用户
                     if (address.equals("https://ello.co/conami")){
                         contentArticle.setAssignedUserGuid("1000065"); } // Joyce Cha
                     else if (address.equals("https://ello.co/fokality")){
                         contentArticle.setAssignedUserGuid("1000088");} // Rico Carver
-
+                    else if (address.equals("https://ello.co/alexgzarate")){
+                        contentArticle.setAssignedUserGuid("1000041"); } // Alex G Zarate
+                    else if (address.equals("https://ello.co/bonniegrrl")){
+                        contentArticle.setAssignedUserGuid("1000048"); }  // Bonnie
                     // 打印查看文章
 //                    System.out.println(article);
 //                    System.out.println("\n Resource image: " + imgUrls);
@@ -104,58 +102,52 @@ public class HttpClientEllo {
 
                     // 获取文字内容
                     String p = content.select("p").text();
-                    int index = p.length();
+                    p = p.replaceAll("@","#").replace("ig : jonathan_tsc", "");
+                    int index;
                     // 节选+筛选文字内容
+                    if (!p.contains("http")){
+                        index = p.length();
+                    }else{
+                        index = p.indexOf("http");
+                    }
                     if (p.length() > 500) {
                         index = 499;
                     }
-                    p = p.replaceAll("@","#").replace("Onwards! + ", "");
-
-                    // 获取外链之前的字符串
+                    // 获取外链之前的字符串,并筛选#标签
                     caption = StringUtils.substringBefore(p.substring(0, index), "Read more in")
+                            .replace("Full recipe", "")
                             .replace("#Ello", "")
                             .replace("#ello", "")
                             .replace("#conamicf", "Healthy")
                             .replace("https://ello.co/","");
 
+                    if (address.equals("https://ello.co/alexgzarate")){
+                        caption = caption.replace("#onwards", "")
+                                .replace("Onwards! + ", "")
+                                .substring(0, caption.indexOf(" #"));
+                    }
+
                     // 判断空文字内容
-                    while (caption.equals("")) {
-                            String[] randStr = new String[]{"Love it", "#Timerec","Felling Good #Today","#timerec","#CoolStuff","Awesome","Good","#Hello"};
-                            caption = randStr[new Random().nextInt(7)];
+                    while (caption.equals("") || caption.length()<2) {
+                        String[] randStr = new String[]{"Love it", "#Timerec","Felling Good #Today","#timerec","#CoolStuff","Awesome","Good","#Hello"};
+                        caption = randStr[new Random().nextInt(7)];
                     }
 
                     // 处理#话题标签
                     if (caption.contains("#")){
-                        String tags = caption.substring(caption.indexOf("#"));
-                        String[] topics = tags.split("#");
-                        for (String t : topics){
-                            Topic topic = new Topic();
-                            if (StringUtils.isBlank(t))
-                                continue;
-                            if (!topicService.isTopicExist(t)){
-                                topic.setTopicGuid(UUID.randomUUID().toString().replaceAll("-",""));
-                                topic.setTopicName(t);
-                                topic.setCapsuleNum(1);
-                                topicService.addTopic(topic);
-                            }else{
-                                topic.setCapsuleNum(+1);
-                            }
-                            CapsuleTopic capTopic = new CapsuleTopic();
-                            capTopic.setCapsuleGuid(contentArticle.getArticleGuid());
-                            capTopic.setTopicGuid(topicService.selectTopicGuid(t));
-                            capsuleTopicService.addCapTopic(capTopic);
-                            System.out.println("Topic: "+ t + " related with capsule");
-                        }
+                        // 截取前5个#
+                        int tSpace = StringUtils.ordinalIndexOf(caption, "#", 6);
+                        if (tSpace != -1){caption = caption.substring(0, tSpace);}
                     }
 
-                    // Content Article 实体 内容赋值
+                    // Content Article 实体 内容赋值/更新数据
                     contentArticle.setContentStr(caption);
 
                     // 获取图片地址
                     String imgUrls = null;
                     for (Element el : article.getElementsByTag("img")) {
                         String img = el.attr("src");
-                        if (img.contains("jpg") || img.contains("png")) {
+                        if (img.contains(".jpg") || img.contains(".png")) {
                             img.substring(img.indexOf("//") + 2);
                             contentArticle.setResourceType(1);
                             if (imgUrls == null) {

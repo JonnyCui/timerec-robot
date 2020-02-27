@@ -4,17 +4,17 @@
 
     <select id="checkArticle" parameterType="contentArticle" resultType="int">
         SELECT count(1)
-        FROM timerec.content_article a
+        FROM timerec.t_content_article a
         WHERE a.article_guid = #{entity.articleGuid}
     </select>
 
     <select id="getCount" resultType="int">
-        SELECT count(1) FROM timerec.content_article a
+        SELECT count(1) FROM timerec.t_content_article a
         WHERE a.pending = 1
     </select>
 
     <select id="selectArticle" parameterType="int" resultType="contentArticle">
-        SELECT * FROM timerec.content_article a
+        SELECT * FROM timerec.t_content_article a
         WHERE a.content_article_id = #{randId}
     </select>
 </mapper>

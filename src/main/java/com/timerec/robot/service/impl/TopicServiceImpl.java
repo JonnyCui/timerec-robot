@@ -29,4 +29,9 @@ public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implements
     public String selectTopicGuid(String topicName){
         return topicMapper.selectTopicGuid(topicName);
     }
+
+    @Override
+    public int getCount() {
+        return topicMapper.getCount();
+    }
 }

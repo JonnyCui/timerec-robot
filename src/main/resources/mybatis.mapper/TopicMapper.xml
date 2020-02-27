@@ -14,4 +14,8 @@
         WHERE t.topic_name = #{topicName}
     </select>
 
+    <select id="getCount" resultType="int">
+        SELECT count(1)
+        FROM timerec.t_topic
+    </select>
 </mapper>

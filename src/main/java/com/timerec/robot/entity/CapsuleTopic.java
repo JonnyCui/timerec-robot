@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class CapsuleTopic implements Serializable {
 
     @TableField("CAPSULE_TOPIC_ID")
-    private int capsuleTopicId;
+    private long capsuleTopicId;
 
     @TableField("TOPIC_GUID")
     private String topicGuid;

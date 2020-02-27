@@ -42,4 +42,9 @@ public class ContentArticleServiceImpl extends ServiceImpl<ContentArticleMapper,
         return contentArticleMapper.getCount();
     }
 
+    @Override
+    public int checkArticle(ContentArticle article) {
+        return contentArticleMapper.checkArticle(article);
+    }
+
 }

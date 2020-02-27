@@ -27,17 +27,17 @@ public class RobotServiceImpl extends ServiceImpl<RobotMapper, Capsule> implemen
         capsule.setWhoSee(4);
         System.out.println(capsule);
 
-        // 判断新建胶囊是否已存在数据库中
-        if (robotMapper.checkCaps(capsule) == 0){
-            this.save(capsule);
-            System.out.println("------ Capsule Uploaded ------");
-        }else{
-            System.out.println("~~~ Capsule already exist！~~~");
-        }
+        this.save(capsule);
+        System.out.println("------ Capsule Uploaded ------");
     }
 
     @Override
     public int capsTotal(){
         return robotMapper.getCapsTotal();
+    }
+
+    @Override
+    public int checkCaps(Capsule capsule) {
+        return robotMapper.checkCaps(capsule);
     }
 }

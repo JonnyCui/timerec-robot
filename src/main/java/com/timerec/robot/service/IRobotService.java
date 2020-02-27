@@ -16,4 +16,6 @@ public interface IRobotService extends IService<Capsule> {
      * @return 目前所有胶囊的数量
      */
     int capsTotal();
+
+    int checkCaps(Capsule capsule);
 }
