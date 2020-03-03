@@ -125,6 +125,8 @@ public class HttpClientEllo {
                         caption = caption.replace("#onwards", "")
                                 .replace("Onwards! + ", "")
                                 .substring(0, caption.indexOf(" #"));
+                    }else if (address.equals("https://ello.co/floatingkitchen")){
+                        caption = caption.replace("Recipe:","").substring(0, caption.indexOf(" #"));
                     }
 
                     // 判断空文字内容
