@@ -8,23 +8,23 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.timerec.robot"/>
+    <context:component-scan base-package="robot"/>
     <bean id="jobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
-        <property name="jobClass" value="com.timerec.robot.demo.Robot"/>
+        <property name="jobClass" value="robot.demo.Robot"/>
     </bean>
 
     <bean name="quartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" destroy-method="destroy" lazy-init="false">
         <property name="dataSource" ref ="dataSource" />
     </bean>
 
-    <bean id="jobFactory" class="com.timerec.robot.configure.TaskSchedulerFactory"/>
+    <bean id="jobFactory" class="robot.configure.TaskSchedulerFactory"/>
 
     <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="jobFactory" ref="jobFactory"/>
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.timerec.robot.mapper" />
+        <property name="basePackage" value="robot.mapper" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 </beans>
