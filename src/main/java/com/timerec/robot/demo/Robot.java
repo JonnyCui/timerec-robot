@@ -21,23 +21,7 @@ import java.util.UUID;
 public class Robot {
 
     private String[] addressArray = {
-//            "https://ello.co/idaspida", // 摄影
-//            "https://ello.co/minusbaby", // 摄影 文艺
-//            "https://ello.co/floatingkitchen", //美食
-//            "https://ello.co/alexgzarate", //日常图文 鸡汤
-//            "https://ello.co/conami",   //美食 摄影
-//            "https://ello.co/notexist", //摄影 台湾
-//            "https://ello.co/doughayes", // 旅拍 生活
-//            "https://ello.co/nino1972", // 摄影 日常
-//            "https://ello.co/draganadz", // 美食
-//            "https://ello.co/fokality",  // 摄影景物
-//            "https://ello.co/jonathan_tsc",     //美食
-//            "https://ello.co/tm_l", // 文艺黑白旧照片
-//            "https://ello.co/theheathermarie",  // 景色
-//            "https://ello.co/andrew_murdoch",   // 老照片
-//            "https://ello.co/andrewlodgephoto",  // 生活
-//            "https://ello.co/darkskieskindeyes", // 文艺青年的日常
-//            "https://ello.co/bonniegrrl", // 新闻消息
+//           Insert urls
 };
     private int count = 1;
     private com.timerec.robot.util.HttpClientEllo HttpClientEllo;
