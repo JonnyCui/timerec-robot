@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.timerec.robot.mapper.TopicMapper">
+<mapper namespace="robot.mapper.TopicMapper">
 
     <select id="checkTopic" parameterType="String" resultType="int">
         SELECT count(1)
-        FROM timerec.t_topic t
+        FROM topic t
         WHERE t.topic_name = #{topic}
     </select>
 
     <select id="selectTopicGuid" parameterType="String" resultType="string">
         SELECT topic_guid
-        FROM timerec.t_topic t
+        FROM topic t
         WHERE t.topic_name = #{topicName}
     </select>
 
     <select id="getCount" resultType="int">
         SELECT count(1)
-        FROM timerec.t_topic
+        FROM topic
     </select>
 </mapper>
