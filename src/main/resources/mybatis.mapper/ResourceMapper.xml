@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
         <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.timerec.robot.mapper.ResourceMapper">
+<mapper namespace="robot.mapper.ResourceMapper">
 
 <select id="checkRes" parameterType="resource" resultType="int">
         SELECT count(1)
-        FROM timerec.t_resource r
+        FROM resource r
         WHERE r.path_name = #{resource.pathName}
     </select>
 
